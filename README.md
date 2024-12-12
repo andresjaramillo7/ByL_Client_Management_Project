@@ -1,7 +1,7 @@
 # ByL_Client_Management_Project
 
 ## Description
-A web application for managing clients, sending automated emails, and managing promotions.
+A web application for managing clients, sending automated whatsapp messages, and managing promotions.
 
 ## Project Structure
 - **Django**: Backend framework for the application.
