@@ -20,4 +20,5 @@ from django.urls import path, include
 # I HAVE TO VERIFY THIS URLS LATER
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('customer.urls')),
 ]

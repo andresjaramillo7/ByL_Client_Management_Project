@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
 
-urlspattern = [
-    
+urlpatterns = [
+    path('customer/', views.customer_list)
 ]

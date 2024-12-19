@@ -1,0 +1,37 @@
+{% extends './../layouts/base.html' %}
+
+{% block title %}Customer List{% endblock %}
+
+{% block content %}
+<h1 class="my-4">Customer List</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Registration Date</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.registration_date }}</td>
+            <td>{{ customer.is_active }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No customers found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
