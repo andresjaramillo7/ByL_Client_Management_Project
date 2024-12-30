@@ -3,35 +3,47 @@
 {% block title %}Customer List{% endblock %}
 
 {% block content %}
-<h1 class="my-4">Customer List</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Registration Date</th>
-            <th>Active</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for customer in customers %}
-        <tr>
-            <td>{{ customer.id }}</td>
-            <td>{{ customer.name }}</td>
-            <td>{{ customer.email }}</td>
-            <td>{{ customer.phone }}</td>
-            <td>{{ customer.address }}</td>
-            <td>{{ customer.registration_date }}</td>
-            <td>{{ customer.is_active }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="7">No customers found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container my-4">
+    <h1 class="my-4">Customer List</h1>
+
+        <div class="mb-3 text-end">
+            <a href="{% url 'create_customer' %}" class="btn btn-primary">Create Customer</a>
+        </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Registration Date</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.created_at|date:"Y-m-d H:i:s" }}</td>
+                <td>{{ customer.active }}</td>
+                <td>
+                    <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No customers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
