@@ -6,9 +6,24 @@
 <div class="container my-4">
     <h1 class="my-4">Customer List</h1>
 
-        <div class="mb-3 text-end">
-            <a href="{% url 'create_customer' %}" class="btn btn-primary">Create Customer</a>
+    <div class="mb-3 text-end">
+        <a href="{% url 'create_customer' %}" class="btn btn-primary">Create Customer</a>
+    </div>
+
+    <form method="get" class="mb-3 d-flex">
+        <div class="input-group me-2">
+            <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ query }}">
         </div>
+        <select name="active" class="form-select me-2">
+            <option value="">All</option>
+            <option value="true" {% if active_filter == 'true' %}selected{% endif %}>Active</option>
+            <option value="false" {% if active_filter == 'false' %}selected{% endif %}>Inactive</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+    
+    
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -23,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for customer in customers %}
+            {% for customer in page_obj %}
             <tr>
                 <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
@@ -36,7 +51,6 @@
                     <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm">Edit</a>
                     <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a>
                 </td>
-                
             </tr>
             {% empty %}
             <tr>
@@ -45,5 +59,35 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 </div>
 {% endblock %}
