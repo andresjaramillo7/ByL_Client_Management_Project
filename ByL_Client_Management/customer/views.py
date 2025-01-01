@@ -1,12 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import Customer
 from .forms import CustomerForm
 
-# Create your views here.
 def customer_list(request):
+    query = request.GET.get('q', '')
+    active_filter = request.GET.get('active', '')
+    
     customers = Customer.objects.all()
-    return render(request, 'customers/customer_list.html', {'customers': customers})
+    if query:
+        customers = customers.filter(name__icontains=query)
+    if active_filter:
+        customers = customers.filter(active=(active_filter == 'true'))
+        
+    paginator = Paginator(customers, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'customers/customer_list.html', {'page_obj': page_obj, 'query': query, 'active_filter': active_filter})
 
 def create_customer(request):
     if request.method == 'POST':
