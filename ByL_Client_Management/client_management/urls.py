@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 # I HAVE TO VERIFY THIS URLS LATER
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('customer.urls')),
+    path('customer/', include('customer.urls')),  # Ruta de clientes
+    path('', RedirectView.as_view(url='/customer/', permanent=True)),  # Redirección a /customers/
 ]

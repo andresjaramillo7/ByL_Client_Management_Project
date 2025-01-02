@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q, Func
 from django.core.paginator import Paginator
-from django.http import HttpResponse
 from .models import Customer
 from .forms import CustomerForm
+
+class Unaccent(Func):
+    function = 'unaccent'
+    template = '%(function)s(%(expressions)s)'
 
 def customer_list(request):
     query = request.GET.get('q', '')
@@ -10,7 +14,14 @@ def customer_list(request):
     
     customers = Customer.objects.all()
     if query:
-        customers = customers.filter(name__icontains=query)
+        customers = customers.annotate(
+            unaccented_name=Unaccent('name'),
+            unaccented_email=Unaccent('email'),
+        ).filter(
+            Q(unaccented_name__icontains=query) |
+            Q(unaccented_email__icontains=query) |
+            Q(phone__icontains=query)
+        )
     if active_filter:
         customers = customers.filter(active=(active_filter == 'true'))
         
