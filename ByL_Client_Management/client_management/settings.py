@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'customer',
     'promotions',
     'notifications',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -83,10 +84,12 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='127.0.0.1'),
+        'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='5432'),
     }
 }
+
+AUTH_USER_MODEL = 'users.bylUser'
 
 
 # Password validation
