@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, Func
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 from .models import Customer
 from .forms import CustomerForm
 
@@ -8,6 +9,7 @@ class Unaccent(Func):
     function = 'unaccent'
     template = '%(function)s(%(expressions)s)'
 
+@login_required
 def customer_list(request):
     query = request.GET.get('q', '')
     active_filter = request.GET.get('active', '')
@@ -31,6 +33,7 @@ def customer_list(request):
     
     return render(request, 'customers/customer_list.html', {'page_obj': page_obj, 'query': query, 'active_filter': active_filter})
 
+@login_required
 def create_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -41,6 +44,7 @@ def create_customer(request):
         form = CustomerForm()
     return render(request, 'customers/create_customer.html', {'form': form})
 
+@login_required
 def edit_customer(request, customer_id):
     customer = get_object_or_404(Customer, id=customer_id)
     if request.method == 'POST':
@@ -52,6 +56,7 @@ def edit_customer(request, customer_id):
         form = CustomerForm(instance=customer)
     return render(request, 'customers/edit_customer.html', {'form': form, 'customer': customer})
 
+@login_required
 def delete_customer(request, customer_id):
     customer = get_object_or_404(Customer, id=customer_id)
     if request.method == 'POST':

@@ -18,9 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 
-# I HAVE TO VERIFY THIS URLS LATER
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('customer/', include('customer.urls')),  # Ruta de clientes
-    path('', RedirectView.as_view(url='/customer/', permanent=True)),  # Redirección a /customers/
+    path('customer/', include('customer.urls')),
+    path('', RedirectView.as_view(url='/customer/', permanent=True)),
+    path('users/', include('users.urls')),
 ]
