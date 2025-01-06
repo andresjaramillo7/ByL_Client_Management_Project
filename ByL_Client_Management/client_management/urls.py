@@ -23,4 +23,5 @@ urlpatterns = [
     path('customer/', include('customer.urls')),
     path('', RedirectView.as_view(url='/customer/', permanent=True)),
     path('users/', include('users.urls')),
+    path('promotions/', include('promotions.urls')),
 ]

@@ -1,0 +1,15 @@
+{% extends './../layouts/base.html' %}
+
+{% block title %}Delete Promotion{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2>Delete Promotion</h2>
+    <p>Are you sure you want to delete <strong>{{ promotion.title }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'promotion_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

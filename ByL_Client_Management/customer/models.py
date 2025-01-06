@@ -1,4 +1,5 @@
 from django.db import models
+from promotions.models import Promotion
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)
@@ -7,6 +8,7 @@ class Customer(models.Model):
     address = models.TextField(null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
-    
+    promotions = models.ManyToManyField(Promotion, related_name='customers')
+
     def __str__(self):
         return self.name
