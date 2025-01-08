@@ -15,7 +15,8 @@ def customer_list(request):
     query = request.GET.get('q', '')
     active_filter = request.GET.get('active', '')
     
-    customers = Customer.objects.all()
+    customers = Customer.objects.all().order_by('created_at')
+    
     if query:
         customers = customers.annotate(
             unaccented_name=Unaccent('name'),

@@ -1,4 +1,4 @@
-{% extends './../layouts/base.html' %}
+{% extends './../layouts/promotions_base.html' %}
 
 {% block title %}Edit Promotion{% endblock %}
 
@@ -12,4 +12,5 @@
         <a href="{% url 'promotion_list' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+{% include './../layouts/promotions_js.html' %}
 {% endblock %}

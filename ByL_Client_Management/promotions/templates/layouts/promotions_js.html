@@ -1,0 +1,14 @@
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const selectAllCheckbox = document.getElementById('select-all');
+    const customerCheckboxes = document.querySelectorAll('input[name="customers"]');
+
+    selectAllCheckbox.addEventListener('change', function () {
+        customerCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    });
+});
+</script>
+{% endblock %}

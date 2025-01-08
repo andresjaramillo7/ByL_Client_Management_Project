@@ -1,4 +1,4 @@
-{% extends './../layouts/base.html' %}
+{% extends './../layouts/promotions_base.html' %}
 
 {% block title %}Promotion List{% endblock %}
 
@@ -30,6 +30,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Active</th>
+                <th>Customer Count</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -42,6 +43,7 @@
                 <td>{{ promotion.start_date|date:"Y-m-d" }}</td>
                 <td>{{ promotion.end_date|date:"Y-m-d" }}</td>
                 <td>{{ promotion.active }}</td>
+                <td>{{ promotion.customer_count }}</td>
                 <td>
                     <a href="{% url 'edit_promotion' promotion.id %}" class="btn btn-warning btn-sm">Edit</a>
                     {% if user.role == 'admin' %}
